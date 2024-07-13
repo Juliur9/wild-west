@@ -11,18 +11,20 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float gravityValue = -9.81f;
     private bool isGrounded;
+    private PlayerLife playerLife;
 
     private void Start()
     {
         controller = GetComponent<CharacterController>();
+        playerLife = GetComponent<PlayerLife>();
+        playerLife.StartAgain();
         inputManager = InputManager.Instance;
         cameraTransform = Camera.main.transform;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
+        if (!playerLife) return;
         isGrounded = IsGrounded();
 
         if (isGrounded && playerVelocity.y < 0)
