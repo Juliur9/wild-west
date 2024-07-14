@@ -7,6 +7,9 @@ TagManager:
   - Kaktus
   - Pfahl
   - Gras
+  - Feuer
+  - Pferd
+  - Wasser
   layers:
   - Default
   - TransparentFX

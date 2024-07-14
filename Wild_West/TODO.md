@@ -6,6 +6,7 @@ Project Description
 
 ### Todo
 
+- [ ] Nacht/Tag  
 - [ ] Hitzeerschöpfung  
 - [ ] Falsches Essen  
 - [ ] Erfrierung  
@@ -13,10 +14,12 @@ Project Description
 
 ### In Progress
 
-- [ ] Durst (mit Schatten)  
 - [ ] Hunger  
 - [ ] Schlangenbiss  
+- [ ] Verbrannte sich am Lagerfeuer  
 
 ### Done ✓
 
+- [x] Getreten vom Pferd  
+- [x] Durst (mit Schatten)  
 

@@ -36,6 +36,12 @@ public class PlayerLife : MonoBehaviour
         {
             Kill("Du hast dich dazu entschieden, dein Leben am Marterpfahl zu beenden!");
         }
+        if (col.gameObject.CompareTag("Pferd"))
+        {
+            Kill(
+                "Dieses Pferd mag dich anscheinend nicht so. Mit seinen Beinen brachte es dich zum Tod!"
+            );
+        }
     }
 
     private void OnTriggerEnter(Collider col)
@@ -46,10 +52,37 @@ public class PlayerLife : MonoBehaviour
             {
                 if (!TouchingGras)
                 {
-                    Kill("Eine Schlange hat im hohen Gras gelauert, dich mit Gift zu töten!");
+                    Kill("Eine Schlange hat im hohen Gras gelauert, um dich mit Gift zu töten!");
                 }
             }
             TouchingGras = true;
+        }
+
+        if (col.gameObject.CompareTag("Feuer"))
+        {
+            Kill("Die Flammen des Feuers brachten dir den qualvollen Tod!");
+        }
+
+        if (col.gameObject.CompareTag("Pferd"))
+        {
+            Kill(
+                "Dieses Pferd mag dich anscheinend nicht so. Mit seinen Beinen brachte es dich um!"
+            );
+        }
+    }
+
+    private void OnTriggerStay(Collider col)
+    {
+        if (col.gameObject.CompareTag("Wasser"))
+        {
+            if (durst.value < 100)
+            {
+                durst.value += Time.deltaTime * 2;
+            }
+            else
+            {
+                durst.value = 100;
+            }
         }
     }
 

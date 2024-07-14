@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3409932115854455173}
   m_Layer: 0
   m_Name: horse black
-  m_TagString: Untagged
+  m_TagString: Pferd
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,8 +92,8 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1063276361714306445}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7764913, y: 2.0276115, z: 2.2930365}
-  m_Center: {x: 0.000004634261, y: 1.0138057, z: 0.0000022649765}
+  m_Size: {x: 1.418935, y: 2.0276115, z: 2.8188744}
+  m_Center: {x: 0, y: 1.0138057, z: -0.12520409}
