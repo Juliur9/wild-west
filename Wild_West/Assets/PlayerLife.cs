@@ -1,39 +1,86 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using Cinemachine;
 
 public class PlayerLife : MonoBehaviour
-{   
+{
     public CinemachinePOVExtension povExtension;
+    public Light lightSource;
+    public LayerMask playerlayerMask;
     private int todescounter = 0;
-    public Slider hunger, durst;
+    public Slider hunger,
+        durst;
 
-    public GameObject gameScreen, deathScreen;
-    public TMP_Text todesgrundText, todcounterText, restartText;
-    [HideInInspector] public bool playerAlive;
-    public Vector3 startPosition, cameraRotation;
+    public GameObject gameScreen,
+        deathScreen;
+    public TMP_Text todesgrundText,
+        todcounterText,
+        restartText;
+
+    [HideInInspector]
+    public bool playerAlive;
+    public Vector3 startPosition,
+        cameraRotation;
+
+    private bool TouchingGras = false;
 
     private void OnControllerColliderHit(ControllerColliderHit col)
-    {   
-        if (!playerAlive) return;
-        if (col.gameObject.tag == "Kaktus") {
+    {
+        if (!playerAlive)
+            return;
+        if (col.gameObject.CompareTag("Kaktus"))
+        {
             Kill("Ein Kaktus hat dich getötet.");
         }
-        if (col.gameObject.tag == "Pfahl") {
+        if (col.gameObject.CompareTag("Pfahl"))
+        {
             Kill("Du hast dich dazu entschieden, dein Leben am Marterpfahl zu beenden!");
         }
     }
-    private void Update() {
-        if (!playerAlive) return;
-        if (hunger.value <= 1) {
-            Kill("Du bist verhungert");
-        }
-        if (durst.value <= 1) {
-            Kill("Du bist verdurstet");
+
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.CompareTag("Gras"))
+        {
+            if (Random.value <= 0.3f)
+            {
+                if (!TouchingGras)
+                {
+                    Kill("Eine Schlange hat im hohen Gras gelauert, dich mit Gift zu töten!");
+                }
+            }
+            TouchingGras = true;
         }
     }
-    public void Kill(string todesgrund) {
+
+    private void OnTriggerExit(Collider col)
+    {
+        if (col.gameObject.CompareTag("Gras"))
+        {
+            TouchingGras = false;
+        }
+    }
+
+    private void Update()
+    {
+        if (!playerAlive)
+            return;
+        if (hunger.value <= 1)
+        {
+            Kill("Du bist verhungert");
+        }
+        if (durst.value <= 1)
+        {
+            Kill("Du bist verdurstet");
+        }
+        if (!InSchatten())
+        {
+            durst.value -= Time.deltaTime * 0.5f;
+        }
+    }
+
+    public void Kill(string todesgrund)
+    {
         playerAlive = false;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -41,27 +88,56 @@ public class PlayerLife : MonoBehaviour
         deathScreen.SetActive(true);
         gameScreen.SetActive(false);
         todesgrundText.text = todesgrund;
-        if (todescounter == 1) {
+        if (todescounter == 1)
+        {
             restartText.text = "Willst du es gleich nochmal versuchen?";
             todcounterText.text = "";
-        } else {
+        }
+        else
+        {
             restartText.text = "Willst du es trotzdem nochmal versuchen?";
-            Debug.Log(todescounter);
             todcounterText.text = "Das war jetzt schon dein " + todescounter + ". Tod!";
         }
     }
 
-    public void StartAgain() {
+    public void StartAgain()
+    {
         playerAlive = true;
         deathScreen.SetActive(false);
         gameScreen.SetActive(true);
+        CharacterController characterController = GetComponent<CharacterController>();
+        characterController.enabled = false;
         transform.position = startPosition;
+        characterController.enabled = true;
+        TouchingGras = false;
         povExtension.startingRotation = cameraRotation;
+        hunger.value = 90;
+        durst.value = 90;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    public void QuitGame() {
+    public void QuitGame()
+    {
         Application.Quit();
+    }
+
+    public bool InSchatten()
+    {
+        Vector3 playerGroundPosition = new Vector3(
+            transform.position.x,
+            transform.position.y + 0.8f,
+            transform.position.z
+        );
+
+        Vector3 directionToLight = -lightSource.transform.forward;
+
+        return Physics.Raycast(
+            playerGroundPosition,
+            directionToLight,
+            out RaycastHit hit,
+            100f,
+            ~playerlayerMask
+        );
     }
 }
