@@ -6,20 +6,20 @@ Project Description
 
 ### Todo
 
-- [ ] Nacht/Tag  
 - [ ] Hitzeerschöpfung  
-- [ ] Falsches Essen  
-- [ ] Erfrierung  
-- [ ] Falsches Trinken  
 
 ### In Progress
 
-- [ ] Hunger  
 - [ ] Schlangenbiss  
-- [ ] Verbrannte sich am Lagerfeuer  
+- [ ] Haus  
+- [ ] Erfrierung  
 
 ### Done ✓
 
+- [x] Verbrannte sich am Lagerfeuer  
 - [x] Getreten vom Pferd  
 - [x] Durst (mit Schatten)  
+- [x] Nacht/Tag  
+- [x] Hunger  
+- [x] Falsches Essen  
 
