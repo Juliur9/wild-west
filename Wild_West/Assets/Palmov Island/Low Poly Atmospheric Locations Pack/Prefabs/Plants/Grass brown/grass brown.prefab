@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6512058598851895405}
   - component: {fileID: 9059990669149901991}
   - component: {fileID: 3949472670848076056}
+  - component: {fileID: 8511701469748663749}
   m_Layer: 0
   m_Name: grass brown
   m_TagString: Gras
@@ -97,3 +98,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8053529, y: 0.9562501, z: 0.7184369}
   m_Center: {x: -0.000000014901161, y: 0.47812486, z: 0.00000017881393}
+--- !u!114 &8511701469748663749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7402635700092745074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19868d8e583f7e26fa4d2aae06a69821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

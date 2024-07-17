@@ -22,8 +22,8 @@ public class PlayerLife : MonoBehaviour
     public Vector3 startPosition,
         cameraRotation;
 
-    private bool TouchingGras = false;
-    private float wärmeZeit;
+    private float wärmeZeit,
+        hitzezeit;
 
     private void OnControllerColliderHit(ControllerColliderHit col)
     {
@@ -49,14 +49,10 @@ public class PlayerLife : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Gras"))
         {
-            if (Random.value <= 0.15f)
+            if (col.gameObject.GetComponent<Gras>().withSchlange)
             {
-                if (!TouchingGras)
-                {
-                    Kill("Eine Schlange hat im hohen Gras gelauert, um dich mit Gift zu töten!");
-                }
+                Kill("Eine Schlange hat im hohen Gras gelauert, um dich mit Gift zu töten!");
             }
-            TouchingGras = true;
         }
 
         if (col.gameObject.CompareTag("Feuer"))
@@ -112,14 +108,6 @@ public class PlayerLife : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider col)
-    {
-        if (col.gameObject.CompareTag("Gras"))
-        {
-            TouchingGras = false;
-        }
-    }
-
     private void Update()
     {
         if (!playerAlive)
@@ -135,6 +123,11 @@ public class PlayerLife : MonoBehaviour
         if (!InSchatten())
         {
             durst.value -= Time.deltaTime * 0.5f;
+            hitzezeit += Time.deltaTime * 3;
+        }
+        else
+        {
+            hitzezeit -= Time.deltaTime * 5;
         }
         if (
             GetComponent<DayNightCycle>().currentTime < 25
@@ -150,9 +143,13 @@ public class PlayerLife : MonoBehaviour
         {
             wärmeZeit = 30f;
         }
-        if (wärmeZeit < -70)
+        if (wärmeZeit < -150)
         {
             Kill("Du bist erfroren!");
+        }
+        if (hitzezeit > 250)
+        {
+            Kill("Du bist an einer Hitzeerschöpfung gestorben!");
         }
     }
 
@@ -182,16 +179,20 @@ public class PlayerLife : MonoBehaviour
         playerAlive = true;
         deathScreen.SetActive(false);
         gameScreen.SetActive(true);
+
         CharacterController characterController = GetComponent<CharacterController>();
         characterController.enabled = false;
         transform.position = startPosition;
         characterController.enabled = true;
-        TouchingGras = false;
         povExtension.startingRotation = cameraRotation;
+
         hunger.value = 90;
         durst.value = 90;
+
         GetComponent<DayNightCycle>().currentTime = 50f;
+
         wärmeZeit = 30f;
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }

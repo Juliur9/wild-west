@@ -6,13 +6,10 @@ Project Description
 
 ### Todo
 
-- [ ] Hitzeerschöpfung  
 
 ### In Progress
 
-- [ ] Schlangenbiss  
 - [ ] Haus  
-- [ ] Erfrierung  
 
 ### Done ✓
 
@@ -22,4 +19,7 @@ Project Description
 - [x] Nacht/Tag  
 - [x] Hunger  
 - [x] Falsches Essen  
+- [x] Schlangenbiss  
+- [x] Hitzeerschöpfung  
+- [x] Erfrierung  
 
