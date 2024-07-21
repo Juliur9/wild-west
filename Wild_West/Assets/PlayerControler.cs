@@ -23,14 +23,13 @@ public class PlayerControler : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         playerLife = GetComponent<PlayerLife>();
-        playerLife.StartAgain();
         inputManager = InputManager.Instance;
         cameraTransform = Camera.main.transform;
     }
 
     void Update()
     {
-        if (!playerLife)
+        if (!playerLife.playerAlive)
             return;
         isGrounded = IsGrounded();
 

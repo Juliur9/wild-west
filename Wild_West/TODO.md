@@ -6,6 +6,10 @@ Project Description
 
 ### Todo
 
+- [ ] Hauptmenü umstrukturieren  
+- [ ] Soundeffekte  
+- [ ] Musik  
+- [ ] About  
 
 ### In Progress
 

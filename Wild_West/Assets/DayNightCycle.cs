@@ -10,10 +10,17 @@ public class DayNightCycle : MonoBehaviour
     public float currentTime = 50f; // aktuelle Zeit (0 - 100)
 
     public GameObject feuer;
+    private PlayerLife playerLife;
+
+    private void Start()
+    {
+        playerLife = GetComponent<PlayerLife>();
+    }
 
     private void Update()
     {
-        //Debug.Log(currentTime);
+        if (!playerLife.playerAlive)
+            return;
         // Zeit aktualisieren
         currentTime += (100 / fullDayLength) * Time.deltaTime;
         if (currentTime >= 95)

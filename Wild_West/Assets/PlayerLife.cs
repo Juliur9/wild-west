@@ -110,6 +110,10 @@ public class PlayerLife : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            ScreenCapture.CaptureScreenshot("/home/julian/Downloads/S.jpg");
+        }
         if (!playerAlive)
             return;
         if (hunger.value <= 1)
@@ -200,6 +204,11 @@ public class PlayerLife : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void StartGame()
+    {
+        StartAgain();
     }
 
     public bool InSchatten()
