@@ -18,12 +18,15 @@ public class PlayerLife : MonoBehaviour
         restartText;
 
     [HideInInspector]
-    public bool playerAlive;
+    public bool playerAlive = false;
     public Vector3 startPosition,
         cameraRotation;
 
     private float wärmeZeit,
         hitzezeit;
+
+    [SerializeField]
+    private AudioSource backgroundMusic;
 
     private void OnControllerColliderHit(ControllerColliderHit col)
     {
@@ -47,6 +50,9 @@ public class PlayerLife : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
+        if (!playerAlive)
+            return;
+
         if (col.gameObject.CompareTag("Gras"))
         {
             if (col.gameObject.GetComponent<Gras>().withSchlange)
@@ -74,11 +80,14 @@ public class PlayerLife : MonoBehaviour
 
     private void OnTriggerStay(Collider col)
     {
+        if (!playerAlive)
+            return;
+
         if (col.gameObject.CompareTag("Wasser"))
         {
             if (durst.value < 100)
             {
-                durst.value += Time.deltaTime * 2;
+                durst.value += Time.deltaTime * 4;
             }
             else
             {
@@ -110,12 +119,13 @@ public class PlayerLife : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            ScreenCapture.CaptureScreenshot("/home/julian/Downloads/S.jpg");
-        }
+        backgroundMusic.enabled = playerAlive;
+
         if (!playerAlive)
             return;
+
+        durst.value -= Time.deltaTime * 0.2f;
+        hunger.value -= Time.deltaTime * 0.2f;
         if (hunger.value <= 1)
         {
             Kill("Du bist verhungert");
@@ -126,7 +136,7 @@ public class PlayerLife : MonoBehaviour
         }
         if (!InSchatten())
         {
-            durst.value -= Time.deltaTime * 0.5f;
+            durst.value -= Time.deltaTime * 0.2f;
             hitzezeit += Time.deltaTime * 3;
         }
         else
@@ -176,6 +186,10 @@ public class PlayerLife : MonoBehaviour
             restartText.text = "Willst du es trotzdem nochmal versuchen?";
             todcounterText.text = "Das war jetzt schon dein " + todescounter + ". Tod!";
         }
+        CharacterController characterController = GetComponent<CharacterController>();
+        characterController.enabled = false;
+        transform.position = startPosition;
+        characterController.enabled = true;
     }
 
     public void StartAgain()
@@ -196,6 +210,7 @@ public class PlayerLife : MonoBehaviour
         GetComponent<DayNightCycle>().currentTime = 50f;
 
         wärmeZeit = 30f;
+        hitzezeit = 30f;
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -226,7 +241,8 @@ public class PlayerLife : MonoBehaviour
             directionToLight,
             out RaycastHit hit,
             100f,
-            ~playerlayerMask
+            ~playerlayerMask,
+            QueryTriggerInteraction.Ignore
         );
     }
 }

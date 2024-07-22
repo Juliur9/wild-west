@@ -70,6 +70,13 @@ public class PlayerControler : MonoBehaviour
     bool IsGrounded()
     {
         RaycastHit hit;
-        return Physics.Raycast(transform.position, Vector3.down, out hit, 1.6f);
+        return Physics.Raycast(
+            transform.position,
+            Vector3.down,
+            out hit,
+            1.6f,
+            Physics.DefaultRaycastLayers,
+            QueryTriggerInteraction.Ignore
+        );
     }
 }
