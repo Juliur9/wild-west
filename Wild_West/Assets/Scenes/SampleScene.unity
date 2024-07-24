@@ -310,6 +310,7 @@ MonoBehaviour:
   startPosition: {x: -13.77, y: 6.44, z: 13.47}
   cameraRotation: {x: 127.9, y: -8, z: 0}
   backgroundMusic: {fileID: 58047312}
+  feuer: {fileID: 1984817803}
 --- !u!114 &58047310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8847,6 +8848,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Feuer
+      objectReference: {fileID: 0}
+    - target: {fileID: 6258991218409019183, guid: e4f26a2795077c749a9c01f2c33c797d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6258991218409019183, guid: e4f26a2795077c749a9c01f2c33c797d,
         type: 3}

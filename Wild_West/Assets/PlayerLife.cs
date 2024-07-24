@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,7 +27,10 @@ public class PlayerLife : MonoBehaviour
         hitzezeit;
 
     [SerializeField]
-    private AudioSource backgroundMusic;
+    private AudioSource backgroundMusic,
+        feuer;
+
+    private float lifetime;
 
     private void OnControllerColliderHit(ControllerColliderHit col)
     {
@@ -120,10 +124,12 @@ public class PlayerLife : MonoBehaviour
     private void Update()
     {
         backgroundMusic.enabled = playerAlive;
+        feuer.enabled = playerAlive;
 
         if (!playerAlive)
             return;
 
+        lifetime += Time.deltaTime;
         durst.value -= Time.deltaTime * 0.2f;
         hunger.value -= Time.deltaTime * 0.2f;
         if (hunger.value <= 1)
@@ -176,14 +182,21 @@ public class PlayerLife : MonoBehaviour
         deathScreen.SetActive(true);
         gameScreen.SetActive(false);
         todesgrundText.text = todesgrund;
+        restartText.text =
+            "Versuche deine Zeit von "
+            + string.Format(
+                "{0:D2}:{1:D2}",
+                Mathf.RoundToInt(lifetime) / 60,
+                Mathf.RoundToInt(lifetime) % 60
+            )
+            + " zu überbieten!";
+
         if (todescounter == 1)
         {
-            restartText.text = "Willst du es gleich nochmal versuchen?";
             todcounterText.text = "";
         }
         else
         {
-            restartText.text = "Willst du es trotzdem nochmal versuchen?";
             todcounterText.text = "Das war jetzt schon dein " + todescounter + ". Tod!";
         }
         CharacterController characterController = GetComponent<CharacterController>();
@@ -194,6 +207,7 @@ public class PlayerLife : MonoBehaviour
 
     public void StartAgain()
     {
+        lifetime = 0;
         playerAlive = true;
         deathScreen.SetActive(false);
         gameScreen.SetActive(true);
