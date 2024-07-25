@@ -28,7 +28,9 @@ public class PlayerLife : MonoBehaviour
 
     [SerializeField]
     private AudioSource backgroundMusic,
-        feuer;
+        feuer,
+        drinking,
+        eating;
 
     private float lifetime;
 
@@ -92,10 +94,15 @@ public class PlayerLife : MonoBehaviour
             if (durst.value < 100)
             {
                 durst.value += Time.deltaTime * 4;
+                drinking.enabled = true;
             }
             else
             {
                 durst.value = 100;
+            }
+            if (durst.value > 99)
+            {
+                drinking.enabled = false;
             }
         }
         if (col.gameObject.CompareTag("Essen"))
@@ -103,10 +110,15 @@ public class PlayerLife : MonoBehaviour
             if (hunger.value < 100)
             {
                 hunger.value += Time.deltaTime * 3;
+                eating.enabled = true;
             }
             else
             {
                 hunger.value = 100;
+            }
+            if (hunger.value > 99)
+            {
+                eating.enabled = false;
             }
         }
         if (
@@ -118,6 +130,18 @@ public class PlayerLife : MonoBehaviour
         )
         {
             wärmeZeit += Time.deltaTime * 6;
+        }
+    }
+
+    private void OnTriggerExit(Collider col)
+    {
+        if (col.gameObject.CompareTag("Wasser"))
+        {
+            drinking.enabled = false;
+        }
+        if (col.gameObject.CompareTag("Essen"))
+        {
+            eating.enabled = false;
         }
     }
 
